@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">Motion Cut</div>
+    <nav>
+      <ul class="menu">
+        <a href="https://motioncut.shop/">Home</a>
+        <a href="https://motioncut.shop/pages/about-us">About</a>
+        <a href="https://motioncut.shop/pages/contact">Contact</a>
+      </ul>
+    </nav>
+    <h1>Our Pricing</h1>
+  </header>
+  <main>
+    <section class="pricing">
+        <div class="pricing-card">
+            <center>
+            <h2>Basic</h2>
+            <p class="price" data-price="10">$10/month</p>
+            <p>720p</p>
+            <p>Mobile</p>
+            <p>1 device</p>
+            <button class="btn">Select Plan</button>
+            </center>
+          </div>
+          <div class="pricing-card">
+            <center>
+            <h2>Pro</h2>
+            <p class="price" data-price="20">$20/month</p>
+              <p>1080p</p>
+              <p>PC</p>
+              <p>2 devices</p>
+            <button class="btn">Select Plan</button>
+            </center>
+          </div>
+          <div class="pricing-card">
+            <center>
+            <h2>Premium</h2>
+            <p class="price" data-price="25">$25/month</p>
+              <p>4k</p>
+              <p>PC & TV</p>
+              <p>3 devices</p>
+            <button class="btn">Select Plan</button>
+            </center>
+          </div>
+    </section>
+
+    <div class="currency-toggle">
+        <label for="currency-select">Select Currency:</label>
+        <select id="currency-select">
+          <option value="USD">USD ($)</option>
+          <option value="GBP">GBP (£)</option>
+          <option value="INR">INR (₹)</option>
+        </select>
+      </div>
+    <footer>
+        <div class="info">
+        <p>Basic (720p), Pro(1080p), Premium(4K) availability subject to your internet service and device capabilities. Not all content is available in all resolutions. See our
+        <a href="https://motioncut.shop/policies/terms-of-service">Terms of services</a></p>
+        </div>
+    </footer>
+  </main>
+  <script>
+    const buttons = document.querySelectorAll('.btn');
+
+buttons.forEach(button => {
+  button.addEventListener('click', () => {
+    alert('Selected plan: ' + button.parentElement.querySelector('h2').textContent);
+  });
+});
+const currencySelect = document.getElementById('currency-select');
+const pricingCards = document.querySelectorAll('.pricing-card');
+const currencySymbols = {
+  USD: '$',
+  GBP: '£',
+  INR: '₹'
+};
+
+const exchangeRates = {
+  USD: { INR: 80, GBP: 0.8 },
+  GBP: { USD: 1.25, INR: 100 },
+  INR: { USD: 0.0125, GBP: 0.01 }
+};
+
+currencySelect.addEventListener('change', () => {
+  const selectedCurrency = currencySelect.value;
+  pricingCards.forEach(card => {
+    const priceElement = card.querySelector('.price');
+    const price = parseFloat(priceElement.getAttribute('data-price'));
+    const convertedPrice = convertCurrency(price, 'USD', selectedCurrency);
+    priceElement.textContent = `${currencySymbols[selectedCurrency]}${convertedPrice.toFixed(2)}/${selectedCurrency}`;
+  });
+});
+
+// Function to convert currency
+function convertCurrency(amount, fromCurrency, toCurrency) {
+  if (fromCurrency === toCurrency) {
+    return amount;
+  }
+  const rate = exchangeRates[fromCurrency][toCurrency];
+  return amount * rate;
+}
+  </script>
+</body>
+</html>
