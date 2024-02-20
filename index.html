@@ -1,112 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pricing Page</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="logo">Motion Cut</div>
-    <nav>
-      <ul class="menu">
-        <a href="https://motioncut.shop/">Home</a>
-        <a href="https://motioncut.shop/pages/about-us">About</a>
-        <a href="https://motioncut.shop/pages/contact">Contact</a>
-      </ul>
-    </nav>
-    <h1>Our Pricing</h1>
-  </header>
-  <main>
-    <section class="pricing">
-        <div class="pricing-card">
-            <center>
-            <h2>Basic</h2>
-            <p class="price" data-price="10">$10/month</p>
-            <p>720p</p>
-            <p>Mobile</p>
-            <p>1 device</p>
-            <button class="btn">Select Plan</button>
-            </center>
-          </div>
-          <div class="pricing-card">
-            <center>
-            <h2>Pro</h2>
-            <p class="price" data-price="20">$20/month</p>
-              <p>1080p</p>
-              <p>PC</p>
-              <p>2 devices</p>
-            <button class="btn">Select Plan</button>
-            </center>
-          </div>
-          <div class="pricing-card">
-            <center>
-            <h2>Premium</h2>
-            <p class="price" data-price="25">$25/month</p>
-              <p>4k</p>
-              <p>PC & TV</p>
-              <p>3 devices</p>
-            <button class="btn">Select Plan</button>
-            </center>
-          </div>
-    </section>
+    <div class="registration-form-container">
+        <form id="registrationForm">
+            <h2>AI generator registration</h2>
+            <div class="form-field">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-field">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-field">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.getElementById("registrationForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
 
-    <div class="currency-toggle">
-        <label for="currency-select">Select Currency:</label>
-        <select id="currency-select">
-          <option value="USD">USD ($)</option>
-          <option value="GBP">GBP (£)</option>
-          <option value="INR">INR (₹)</option>
-        </select>
-      </div>
-    <footer>
-        <div class="info">
-        <p>Basic (720p), Pro(1080p), Premium(4K) availability subject to your internet service and device capabilities. Not all content is available in all resolutions. See our
-        <a href="https://motioncut.shop/policies/terms-of-service">Terms of services</a></p>
-        </div>
-    </footer>
-  </main>
-  <script>
-    const buttons = document.querySelectorAll('.btn');
+            // Get form data
+            var username = document.getElementById("username").value;
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
 
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    alert('Selected plan: ' + button.parentElement.querySelector('h2').textContent);
-  });
-});
-const currencySelect = document.getElementById('currency-select');
-const pricingCards = document.querySelectorAll('.pricing-card');
-const currencySymbols = {
-  USD: '$',
-  GBP: '£',
-  INR: '₹'
-};
+            // Simulate saving data (you would replace this with actual backend code)
+            saveFormData(username, email, password);
 
-const exchangeRates = {
-  USD: { INR: 80, GBP: 0.8 },
-  GBP: { USD: 1.25, INR: 100 },
-  INR: { USD: 0.0125, GBP: 0.01 }
-};
+            // Clear the form fields
+            document.getElementById("username").value = "";
+            document.getElementById("email").value = "";
+            document.getElementById("password").value = "";
 
-currencySelect.addEventListener('change', () => {
-  const selectedCurrency = currencySelect.value;
-  pricingCards.forEach(card => {
-    const priceElement = card.querySelector('.price');
-    const price = parseFloat(priceElement.getAttribute('data-price'));
-    const convertedPrice = convertCurrency(price, 'USD', selectedCurrency);
-    priceElement.textContent = `${currencySymbols[selectedCurrency]}${convertedPrice.toFixed(2)}/${selectedCurrency}`;
-  });
-});
+            alert("Registration successful!"); // Display a success message
+        });
 
-// Function to convert currency
-function convertCurrency(amount, fromCurrency, toCurrency) {
-  if (fromCurrency === toCurrency) {
-    return amount;
-  }
-  const rate = exchangeRates[fromCurrency][toCurrency];
-  return amount * rate;
-}
-  </script>
+        function saveFormData(username, email, password) {
+            // Here you would perform AJAX request to send data to the server
+            // For simulation purpose, I'm just logging the data to console
+            console.log("Saving data:");
+            console.log("Username: " + username);
+            console.log("Email: " + email);
+            console.log("Password: " + password);
+        }
+    </script>
 </body>
 </html>
